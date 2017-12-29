@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.GoodsOrderDetailDao">
+<!-- 添加物品订单详情 -->
+<insert id="addGoodsOrderDetail" parameterType="GoodsOrderDetail" keyProperty="goodsOrderDetailId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  goods_order_detail_tb 
+   		 (
+   		 goods_name,
+   		 img_address,
+   		 name,
+   		 phone,
+   		 address,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_order_id)
+   VALUES
+    	 (
+    	 #{goodsName},
+    	 #{imgAddress},
+    	 #{name},
+    	 #{phone},
+    	 #{address},
+    	 #{createDate},
+    	 #{updateDate},
+    	 #{status},
+    	 #{goodsOrderId}
+    	 )  
+</insert>  
+<!-- 更新物品订单详情 -->
+<update id="updateGoodsOrderDetail" parameterType="GoodsOrderDetail" >  
+    UPDATE 
+    	goods_order_detail_tb 
+    <set>
+	<if test="goodsName!=null">
+    	goods_name=#{goodsName},	
+	</if>
+	<if test="imgAddress!=null">
+    	img_address=#{imgAddress},
+    	</if>
+	<if test="name!=null">
+    	name=#{name},
+    	</if>
+	<if test="phone!=null">
+    	phone=#{phone},
+    	</if>
+	<if test="address!=null">
+    	address=#{address},
+    	</if>
+	<if test="createDate!=null">
+    	create_date=#{createDate},
+    	</if>
+	<if test="updateDate!=null">
+    	update_date=#{updateDate},
+    	</if>
+	<if test="status!=null">
+    	status=#{status},
+    	</if>
+	<if test="goodsOrderId!=null">
+    	goods_order_id=#{goodsOrderId},
+    	</if>
+    </set>
+    WHERE
+    	 goods_order_detail_id=#{goodsOrderDetailId} 
+</update> 
+<!-- 删除物品订单详情-->
+<delete id="delGoodsOrderDetail"  parameterType="Integer" >  
+    DELETE FROM
+    	 goods_order_detail_tb 
+    	 WHERE goods_order_detail_id=#{goodsOrderDetailId}
+</delete>  
+<!-- 加载物品订单详情-->
+<select id="loadGoodsOrderDetail" parameterType="Integer" resultType="GoodsOrderDetail" >
+SELECT 
+		 goods_order_detail_id,
+	 	 goods_name,
+   		 img_address,
+   		 name,
+   		 phone,
+   		 address,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_order_id
+FROM goods_order_detail_tb 
+WHERE goods_order_detail_id=#{goodsOrderDetailId}
+</select>
+
+<!-- 分页查询物品订单详情-->
+<select id="browsePagingGoodsOrderDetail" resultType="GoodsOrderDetail">  
+        SELECT
+	     goods_order_detail_id,
+	 	 goods_name,
+   		 img_address,
+   		 name,
+   		 phone,
+   		 address,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_order_id
+	FROM goods_order_detail_tb
+	<where>
+	<if test="goodsOrderId!=null">
+	AND goods_order_id=#{goodsOrderId}
+	</if>
+    <if test="startDate!=null">
+    AND DATE(start_date)=DATE(#{startDate})
+    	</if>
+	<if test="endDate!=null">
+    AND DATE(end_date)=DATE(#{endDate})
+    	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	<if test="status!=null">
+    AND	status=#{status}
+    </if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM goods_order_detail_tb 
+	<where>
+	<if test="goodsOrderId!=null">
+	AND goods_order_id=#{goodsOrderId}
+	</if>
+	  <if test="startDate!=null">
+    AND DATE(start_date)=DATE(#{startDate})
+    	</if>
+	<if test="endDate!=null">
+    AND DATE(end_date)=DATE(#{endDate})
+    	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	<if test="status!=null">
+    AND	status=#{status}
+    </if>
+	</where>
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(goods_order_id)
+	FROM goods_order_detail_tb
+	<where>
+	<if test="goodsOrderId!=null">
+	AND goods_order_id=#{goodsOrderId}
+	</if>
+	  <if test="startDate!=null">
+    AND DATE(start_date)=DATE(#{startDate})
+    	</if>
+	<if test="endDate!=null">
+    AND DATE(end_date)=DATE(#{endDate})
+    	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	<if test="status!=null">
+    AND	status=#{status}
+    </if>
+	</where>
+</select>   
+   
+ 
+</mapper>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.GoodsOrderDao">
+<!-- 添加物品订单 -->
+<insert id="addGoodsOrder" parameterType="GoodsOrder" keyProperty="goodsOrderId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  goods_order_tb 
+   		 (
+   		 order_number,
+   		 create_date,
+   		 update_date,
+   		 acount_id)
+   VALUES
+    	 (
+    	 #{orderNumber},
+    	 #{createDate},
+    	 #{updateDate},
+    	 #{acountId}
+    	 )  
+</insert>  
+<!-- 更新物品订单 -->
+<update id="updateGoodsOrder" parameterType="GoodsOrder" >  
+    UPDATE 
+    	goods_order_tb 
+    <set>
+    <if test="orderNumber!=null">
+    	order_number=#{orderNumber},
+    </if>
+    <if test="createDate!=null">
+    	create_date=#{createDate},
+    </if>
+    <if test="updateDate!=null">
+    	update_date=#{updateDate},
+    </if>
+    <if test="acountId!=null">
+    	acount_id=#{acountId},
+    </if>
+    </set>
+    WHERE
+    	goods_order_id=#{goodsOrderId} 
+</update> 
+<!-- 删除物品订单-->
+<delete id="delGoodsOrder"  parameterType="Integer" >  
+    DELETE FROM
+    	 goods_order_tb 
+    	 WHERE goods_order_id=#{goodsOrderId}
+</delete>  
+<!-- 加载物品订单-->
+<select id="loadGoodsOrder" parameterType="Integer" resultType="GoodsOrder" >
+SELECT 
+		 goods_order_id,
+	 	 order_number,
+   		 create_date,
+   		 update_date,
+   		 acount_id
+FROM goods_order_tb 
+WHERE goods_order_id=#{goodsOrderId}
+</select>
+
+<!-- 分页查询物品订单-->
+<select id="browsePagingGoodsOrder" resultType="GoodsOrder">  
+        SELECT
+	     goods_order_id,
+	 	 order_number,
+   		 create_date,
+   		 update_date,
+   		 acount_id
+	FROM goods_order_tb
+	<where>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="orderNumber!=null">
+	AND order_number=#{orderNumber}
+	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	AND ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM goods_order_tb 
+	<where>
+	<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="orderNumber!=null">
+	AND order_number=#{orderNumber}
+	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	</where>
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	</where>
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(goods_order_id)
+	FROM goods_order_tb
+	<where>
+		<if test="acountId!=null">
+	AND acount_id=#{acountId}
+	</if>
+	<if test="orderNumber!=null">
+	AND order_number=#{orderNumber}
+	</if>
+	<if test="createDate!=null">
+	AND DATE(create_date)=DATE(#{createDate})
+	</if>
+	<if test="updateDate!=null">
+	AND DATE(update_date)=DATE(#{updateDate})
+	</if>
+	</where>
+</select>   
+   
+ 
+</mapper>

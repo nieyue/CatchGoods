@@ -1,0 +1,74 @@
+<div style="margin:10px;">
+<button class="btn btn-primary" ui-sref="main.goodsList">返回物品列表</button>
+</div>
+ <label  class="text-danger" style="font-size:30px;color:#ccc;">修改物品</label>
+<br/>
+<!-- 修改 -->
+	<form novalidate name="myUpdateGoodsForm" ng-submit="updateGoodsForm()">
+  <label  class="text-danger">※物品类型</label>
+  <div class=" comment-input-margin">
+    <select style="width:180px;height:50px;" ng-model="goods.goodsCateId" name="goodsCateId"
+    ng-options="goodsCate.goodsCateId as goodsCate.name for goodsCate in goodsCateList;">
+  </select>
+  </div>
+    <label  class="text-danger">※物品名</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="goods.goodsName" name="goodsName" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddGoodsForm.goodsName.$dirty && myAddGoodsForm.goodsName.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确物品标题
+				    </div>
+  </div>
+  
+   <label  class="text-danger">※物品图片（宽高最大1200px）</label>
+  <div class="comment-input-margin">
+  <div>
+ 		<div>
+    		<input type="radio"  ng-model="imgConfigRadio" ng-init="imgConfigRadio=0" value="0">自定义尺寸（默认）
+    		<input type="radio"  ng-model="imgConfigRadio" ng-change="imgConfigWidth='';imgConfigHeight='';" value="1">原始尺寸
+ 		</div>
+ 		<div ng-if="imgConfigRadio==0" >
+    		宽(px)：<input type="text" ng-model="$parent.imgConfigWidth" ng-init="$parent.imgConfigWidth=100">
+    		高(px)：<input type="text" ng-model="$parent.imgConfigHeight" ng-init="$parent.imgConfigHeight=100">
+ 		</div>
+ 		<div ng-if="imgConfigRadio==1"  class="text text-info">
+	 			原始尺寸即是上传图片尺寸！
+ 		</div>
+ 	</div>
+    <input type="file" class="comment-input"   id="goodsImgFileUpload">
+  <div  style="display: inline-block;position: relative;" ng-mouseenter="delgoodsImgBtn=true">
+  <img   ng-src="{{goods.imgAddress||''}}"/>
+  </div>
+  </div>
+  
+   <label class="text-danger" >※摄像头个数</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="cameraNumber"
+     ng-model="goods.cameraNumber" required ng-pattern="/^\+?[1-9][0-9]*$/" placeholder="除0正整数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddGoodsForm.cameraNumber.$dirty && myAddGoodsForm.cameraNumber.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>大于1正整数
+	</div>
+  </div>
+  <label class="text-danger" >※单次收费</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="singleCharge"
+     ng-model="goods.singleCharge" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddGoodsForm.singleCharge.$dirty && myAddGoodsForm.singleCharge.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" >※推荐类型</label>
+  <div class="comment-input-margin " >
+     <select style="width:180px;height:50px;" ng-model="goods.recommend" name="recommend"
+     ng-options="sa.id as sa.value for sa in goodsRecommend">
+  </select>
+  </div>
+<label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="goods.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'故障'},{id:1,value:'空闲中'},{id:2,value:'使用中'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled="myUpdateGoodsForm.$invalid || formDisabled" value="提交"/>
+</form>
+<!-- 修改end-->

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.GoodsCateDao">
+<!-- 添加物品类型 -->
+<insert id="addGoodsCate" parameterType="GoodsCate" keyProperty="goodsCateId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  goods_cate_tb 
+   		 (name,update_date)
+   VALUES
+    	 (#{name},#{updateDate})  
+</insert>  
+<!-- 更新物品类型 -->
+<update id="updateGoodsCate" parameterType="GoodsCate" >  
+    UPDATE 
+    	goods_cate_tb 
+    SET 
+    	name=#{name},
+    	update_date=#{updateDate}
+    WHERE
+    	 goods_cate_id=#{goodsCateId} 
+</update> 
+<!-- 删除物品类型-->
+<delete id="delGoodsCate"  parameterType="Integer" >  
+    DELETE FROM
+    	 goods_cate_tb 
+    	 WHERE goods_cate_id=#{goodsCateId}
+</delete>  
+<!-- 加载物品类型-->
+<select id="loadGoodsCate" parameterType="Integer" resultType="GoodsCate" >
+SELECT 
+		goods_cate_id,
+	 	name,
+    	update_date
+FROM goods_cate_tb 
+<where>
+<if test="goodsCateId!=null">
+AND goods_cate_id=#{goodsCateId}
+</if>
+<if test="name!=null">
+AND name=#{name}
+</if>
+</where>
+</select>
+
+<!-- 分页查询物品类型-->
+<select id="browsePagingGoodsCate" resultType="GoodsCate">  
+        SELECT
+	    goods_cate_id,
+	 	name,
+    	update_date
+	FROM goods_cate_tb
+	WHERE ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM goods_cate_tb 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(goods_cate_id)
+	FROM goods_cate_tb
+</select>   
+   
+ 
+</mapper>

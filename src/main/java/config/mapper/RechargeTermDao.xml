@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.RechargeTermDao">
+<!-- 添加充值项 -->
+<insert id="addRechargeTerm" parameterType="RechargeTerm" keyProperty="rechargeTermId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  recharge_term_tb 
+   		 (title,recharge_money,give_money,create_date,update_date,status)
+   VALUES
+    	 (#{title},#{rechargeMoney},#{giveMoney},#{createDate},#{updateDate},#{status})  
+</insert>  
+<!-- 更新充值项 -->
+<update id="updateRechargeTerm" parameterType="RechargeTerm" >  
+    UPDATE 
+    	recharge_term_tb 
+    SET 
+    	title=#{title},
+    	recharge_money=#{rechargeMoney},
+    	give_money=#{giveMoney},
+    	create_date=#{createDate},
+    	update_date=#{updateDate},
+    	status=#{status}
+    WHERE
+    	 recharge_term_id=#{rechargeTermId} 
+</update> 
+<!-- 删除充值项-->
+<delete id="delRechargeTerm"  parameterType="Integer" >  
+    DELETE FROM
+    	 recharge_term_tb 
+    	 WHERE recharge_term_id=#{rechargeTermId}
+</delete>  
+<!-- 加载充值项-->
+<select id="loadRechargeTerm" parameterType="Integer" resultType="RechargeTerm" >
+SELECT 
+		recharge_term_id,
+	 	title,
+	 	recharge_money,
+	 	give_money,
+	 	create_date,
+	 	update_date,
+	 	status
+FROM recharge_term_tb 
+WHERE recharge_term_id=#{rechargeTermId}
+</select>
+
+<!-- 分页查询充值项-->
+<select id="browsePagingRechargeTerm" resultType="RechargeTerm">  
+        SELECT
+	    recharge_term_id,
+	 	title,
+	 	recharge_money,
+	 	give_money,
+	 	create_date,
+	 	update_date,
+	 	status
+	FROM recharge_term_tb
+	WHERE ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM recharge_term_tb 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(recharge_term_id)
+	FROM recharge_term_tb
+</select>   
+   
+ 
+</mapper>

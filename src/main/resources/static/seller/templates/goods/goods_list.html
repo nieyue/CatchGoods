@@ -1,0 +1,102 @@
+<!-- 物品列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">物品列表</label>
+</div>
+<!-- 物品列表选择end -->
+<!-- 物品列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>物品ID</th>
+			  <th>物品图片</th>
+			  <th>类型</th>
+			  <th>物品名</th>
+			  <th>摄像头个数</th>
+			  <th>单次收费</th>
+			  <th>免费已玩次数</th>
+			  <th>收费已玩次数</th>
+			  <th>总收费</th>
+			  <th>推荐类型</th>
+			  <th>数据</th>
+			  <th>状态</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			  <th >操作</th> 
+			</tr>
+			<tr ng-repeat="goods in goodsList.list" >
+			  <td >
+			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="goods.goodsId"></span>
+			  </td>
+			  <td >
+				 <img class=" comment-list-item-img " style="margin-top:3px;width:100px;height:100px;"
+					ng-src="{{goods.imgAddress}}" >
+			  </td>
+			  <td >
+			  <span ng-bind="goods.goodsCate.name"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="goods.goodsName"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="goods.cameraNumber"></span>
+			  </td>
+			  <td>
+			  金币：<span class="text-danger" ng-bind="goods.singleCharge"></span>
+			  </td>
+			  <td >
+			  <span  ng-bind="goods.freeNumber"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="goods.chargeNumber"></span>
+			  </td>
+			  <td >
+			   金币：<span class="text-danger" ng-bind="goods.totalCharge>10000?(goods.totalCharge/10000).toFixed(2)+'万':goods.totalCharge"></span>
+			  </td>
+			  <td >
+			  <span ng-repeat="recommend in goodsRecommend" ng-if="recommend.id==goods.recommend" ng-bind="recommend.value"></span>
+			  </td>
+			  <td style="text-align:left;white-space:nowrap ">
+			  <div>pv:<span style="color:#999" ng-bind="goods.pvs"></span></div>
+			  <div>uv:<span style="color:#999" ng-bind="goods.uvs"></span></div>
+			  <div>ip:<span style="color:#999" ng-bind="goods.ips"></span></div>
+			  <div>阅读:<span style="color:#999" ng-bind="goods.readingNumber"></span></div>
+			  </td>
+			  <td >
+			  <span ng-style="{color:goods.status==1?'green':goods.status==2?'blue':'red'}"  ng-bind="goods.status==1?'空闲中':goods.status==2?'使用中':'故障'"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="goods.createDate"></span>
+			  </td>
+			  <td ng-bind="goods.updateDate"></td>
+			 <td >
+			  <button class=" btn btn-warning" ng-click="updateGoods(goods)">修改</button>
+			  <!-- <button class=" btn btn-danger" ng-click="delGoods(goods)">删除</button> -->
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 物品列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

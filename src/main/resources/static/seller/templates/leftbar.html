@@ -1,0 +1,227 @@
+<!-- 左边导航 -->
+<div class="clearfix metismenu ">
+	<aside class="sidebar boxShaow">
+		<nav class="sidebar-nav" style="background-image:linear-gradient(to right,#ccc 0, #000 0 )">
+			<ul id="leftBar">
+				<li>
+					<a ui-sref="main.index">
+						<span class="glyphicon glyphicon-home"></span>
+						<span >首页</span>
+					</a>
+				</li>
+				<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-cog"></span>
+						<span >配置管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-globe"></span>
+								<span >域名管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.shareDomain">设置分享合伙人域名</a></li>
+								<li><a class="text-center" ui-sref="main.gmwDomain">设置光明网文章域名</a></li>
+								<li><a class="text-center" ui-sref="main.ssDomain">设置三俗文章域名</a></li>
+								<li><a class="text-center" ui-sref="main.adDomain">设置跨域广告域名</a></li>
+							</ul>
+						</li>
+						<!-- <li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-certificate"></span>
+								<span>任务工作管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.scheduleJobList">任务工作列表</a></li>
+								<li><a class="text-center" ui-sref="main.scheduleJobAdd">增加任务工作</a></li>
+							</ul>
+						</li> -->
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-certificate"></span>
+								<span >APP版本管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.appVersionList">APP版本列表</a></li>
+								<li><a class="text-center" ui-sref="main.appVersionAdd">增加APP版本</a></li>
+							</ul>
+						</li>
+						<!-- <li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-lock"></span>
+								<span >基础配置管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a ui-sref="main.scaleIncrement">合伙人收益比例增量</a></li>
+								<li><a ui-sref="main.sensitiveWord">敏感词管理</a></li>
+							</ul>
+						</li> -->
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-book"></span>
+						<span >物品管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-duplicate"></span>
+								<span >物品类型管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.goodsCateList">物品类型列表</a></li>
+								<li><a class="text-center" ui-sref="main.goodsCateAdd">增加物品类型</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-book"></span>
+								<span >物品管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.goodsList">物品列表</a></li>
+								<li><a class="text-center" ui-sref="main.goodsAdd">增加物品</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-grain"></span>
+								<span >物品抓取记录</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.catchRecordList">抓取记录列表</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-shopping-cart"></span>
+								<span >物品订单管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.goodsOrderList">物品订单列表</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-asterisk"></span>
+						<span >展示管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-volume-up"></span>
+								<span >公告管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.noticeList">公告列表</a></li>
+								<li><a class="text-center" ui-sref="main.noticeAdd">增加公告</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li  ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-yen"></span>
+						<span >充值管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-yen"></span>
+								<span >充值项管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.rechargeTermList">充值项列表</a></li>
+								<li><a class="text-center" ui-sref="main.rechargeTermAdd">增加充值项</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<span class="glyphicon glyphicon-grain"></span>
+								<span >充值记录管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.rechargeRecordList">充值记录列表</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-user"></span>
+						<span >账户管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						 <!-- <li><a class="text-center" ui-sref="main.acountData">账户数据</a></li>
+				         -->
+				        <li><a class="text-center" ui-sref="main.financeData">财务数据</a></li>
+						<li><a class="text-center" ui-sref="main.acountList">账户列表</a></li>
+						<li><a class="text-center" ui-sref="main.acountAdd">增加账户</a></li>
+					</ul>
+				</li>
+				<!-- <li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-yen"></span>
+						<span >财务管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li><a class="text-center" ui-sref="main.financeDetailsData">充值/提现数据</a></li>
+						<li><a class="text-center" ui-sref="main.financeDetailsList">充值/提现列表</a></li>
+					</ul>
+				</li> -->
+			   <!--  <li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-leaf"></span>
+						<span >推广管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li><a class="text-center" ui-sref="main.spreadList">推广管理列表</a></li>
+						<li><a class="text-center" ui-sref="main.spreadAdd">增加推广管理</a></li>
+					</ul>
+				</li>  -->
+				<li ng-show="sessionRole.name=='超级管理员'||sessionRole.name=='运营管理员'">
+					<a href="javascript:;">
+						<span class="glyphicon glyphicon-fire"></span>
+						<span >广告管理 </span>
+						<span class="glyphicon arrow"></span>
+					</a>
+					<ul>
+						<li>
+							<a class="text-center">
+								<span class="glyphicon glyphicon-list-alt"></span>
+								<span >JS广告管理</span>
+								<span class="glyphicon arrow"></span>
+							</a>
+							<ul>
+								<li><a class="text-center" ui-sref="main.jsAd">设置JS广告</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+	</aside>
+</div> 
+ 

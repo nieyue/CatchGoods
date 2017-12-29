@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.CatchRecordDao">
+<!-- 添加抓取记录 -->
+<insert id="addCatchRecord" parameterType="CatchRecord" keyProperty="catchRecordId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  catch_record_tb 
+   		 (
+   		 name,
+   		 img_address,
+   		 money,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_id,
+   		 acount_id)
+   VALUES
+    	 (#{name},
+    	 #{imgAddress},
+    	 #{money},
+    	 #{createDate},
+    	 #{updateDate},
+    	 #{status},
+    	 #{goodsId},
+    	 #{acountId})  
+</insert>  
+<!-- 更新抓取记录 -->
+<update id="updateCatchRecord" parameterType="CatchRecord" >  
+    UPDATE 
+    	catch_record_tb 
+    SET 
+    	name=#{name},
+    	img_address=#{imgAddress},
+    	money=#{money},
+    	create_date=#{createDate},
+    	update_date=#{updateDate},
+    	status=#{status},
+    	goods_id=#{goodsId},
+    	acount_id=#{acountId}
+    WHERE
+    	 catch_record_id=#{catchRecordId} 
+</update> 
+<!-- 删除抓取记录-->
+<delete id="delCatchRecord"  parameterType="Integer" >  
+    DELETE FROM
+    	 catch_record_tb 
+    	 WHERE catch_record_id=#{catchRecordId}
+</delete>  
+<!-- 加载抓取记录-->
+<select id="loadCatchRecord" parameterType="Integer" resultType="CatchRecord" >
+SELECT 
+		 recharge_record_id,
+	 	 name,
+   		 img_address,
+   		 money,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_id,
+   		 acount_id
+FROM catch_record_tb 
+WHERE recharge_record_id=#{catchRecordId}
+</select>
+
+<!-- 分页查询抓取记录-->
+<select id="browsePagingCatchRecord" resultType="CatchRecord">  
+        SELECT
+	     recharge_record_id,
+	 	 name,
+   		 img_address,
+   		 money,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 goods_id,
+   		 acount_id
+	FROM catch_record_tb
+	WHERE ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM catch_record_tb 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(recharge_record_id)
+	FROM catch_record_tb
+</select>   
+   
+ 
+</mapper>

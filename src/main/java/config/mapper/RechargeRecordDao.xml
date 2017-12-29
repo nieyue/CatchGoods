@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.nieyue.dao.RechargeRecordDao">
+<!-- 添加充值记录 -->
+<insert id="addRechargeRecord" parameterType="RechargeRecord" keyProperty="rechargeRecordId" flushCache="true"  >  
+   INSERT IGNORE INTO
+   		  recharge_record_tb 
+   		 (type,
+   		 money,
+   		 create_date,
+   		 update_date,
+   		 status,
+   		 acount_id)
+   VALUES
+    	 (#{type},
+    	 #{money},
+    	 #{createDate},
+    	 #{updateDate},
+    	 #{status},
+    	 #{acountId})  
+</insert>  
+<!-- 更新充值记录 -->
+<update id="updateRechargeRecord" parameterType="RechargeRecord" >  
+    UPDATE 
+    	recharge_record_tb 
+    SET 
+    	type=#{type},
+    	money=#{money},
+    	create_date=#{createDate},
+    	update_date=#{updateDate},
+    	status=#{status},
+    	acount_id=#{acountId}
+    WHERE
+    	 recharge_record_id=#{rechargeRecordId} 
+</update> 
+<!-- 删除充值记录-->
+<delete id="delRechargeRecord"  parameterType="Integer" >  
+    DELETE FROM
+    	 recharge_record_tb 
+    	 WHERE recharge_record_id=#{rechargeRecordId}
+</delete>  
+<!-- 加载充值记录-->
+<select id="loadRechargeRecord" parameterType="Integer" resultType="RechargeRecord" >
+SELECT 
+		recharge_record_id,
+	 	type,
+	 	money,
+	 	create_date,
+	 	update_date,
+	 	status,
+	 	acount_id
+FROM recharge_record_tb 
+WHERE recharge_record_id=#{rechargeRecordId}
+</select>
+
+<!-- 分页查询充值记录-->
+<select id="browsePagingRechargeRecord" resultType="RechargeRecord">  
+        SELECT
+	    recharge_record_id,
+	 	type,
+	 	money,
+	 	create_date,
+	 	update_date,
+	 	status,
+	 	acount_id
+	FROM recharge_record_tb
+	WHERE ${orderName} 
+	<if test="orderWay=='asc'">
+	<![CDATA[>=]]> 
+	</if>
+	<if test="orderWay=='desc'">
+	  <![CDATA[<= ]]>
+	</if>
+	(SELECT ${orderName} FROM recharge_record_tb 
+		ORDER BY 
+			${orderName}  ${orderWay}
+		LIMIT #{pageNum}, 1
+		) 
+	ORDER BY
+		${orderName}  ${orderWay}
+	LIMIT
+		#{pageSize}
+</select> 
+
+<!-- 统计记录条数 -->
+<select id="countAll"  resultType="int">  
+	SELECT
+	 	count(recharge_record_id)
+	FROM recharge_record_tb
+</select>   
+   
+ 
+</mapper>

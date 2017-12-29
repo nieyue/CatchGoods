@@ -1,0 +1,70 @@
+<!-- 充值项列表选择 -->
+<div style="margin:10px;">
+<label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">充值项列表</label>
+</div>
+<!-- 充值项列表选择end -->
+<!-- 充值项列表 -->
+		<div style="width:100%" class="tableWrap">
+			<table class="table table-bordered" style="width:100%">
+			<tr>
+			  <th>序号</th>
+			  <th>充值项ID</th>
+			  <th>充值项名</th>
+			  <th>充值真钱</th>
+			  <th>赠送金币</th>
+			  <th>状态</th>
+			  <th>创建时间</th>
+			  <th>更新时间</th>
+			  <th >操作</th> 
+			</tr>
+			<tr ng-repeat="rechargeTerm in rechargeTermList.list" >
+			  <td >
+			  <span ng-bind="(currentPage-1)*pageNumber+$index+1"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="rechargeTerm.rechargeTermId"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="rechargeTerm.title"></span>
+			  </td>
+			  <td>
+			  ￥：<span class="text-danger" ng-bind="rechargeTerm.rechargeMoney>10000?(rechargeTerm.rechargeMoney/10000).toFixed(2)+'万':rechargeTerm.rechargeMoney"></span>
+			  </td>
+			  <td>
+			  金币：<span class="text-danger" ng-bind="rechargeTerm.giveMoney>10000?(rechargeTerm.giveMoney/10000).toFixed(2)+'万':rechargeTerm.giveMoney"></span>
+			  </td>
+			  <td >
+			  <span ng-style="{color:rechargeTerm.status==1?'green':'red'}"  ng-bind="rechargeTerm.status==1?'上架':'下架'"></span>
+			  </td>
+			  <td >
+			  <span ng-bind="rechargeTerm.createDate"></span>
+			  </td>
+			  <td ng-bind="rechargeTerm.updateDate"></td>
+			 <td >
+			  <button class=" btn btn-warning" ng-click="updateRechargeTerm(rechargeTerm)">修改</button>
+			  <!-- <button class=" btn btn-danger" ng-click="delRechargeTerm(rechargeTerm)">删除</button> -->
+			  </td>
+			</tr>
+			</table>
+		</div>
+<!-- 充值项列表end -->
+	<!-- 页面列表end -->
+<!-- 加载更多end -->
+   <div >
+    <ul class="pagination " >
+    <li><a ng-click="toPage('首页')" >首页</a></li>
+    <li class="previous" ><a ng-click="toPage('previous')" >&larr;</a></li>
+
+    <li ng-repeat="currentPageNumber in showPageNumberArray"><a ng-click="toPage(currentPageNumber)" ng-class="{active:currentPageNumber==currentPage}">{{currentPageNumber}}</a></li>
+
+    <li class="next"  ><a ng-click="toPage('next')" >&rarr;</a></li>
+    <li><a ng-click="toPage('尾页')" >尾页</a></li>
+    <li> <span>总页数：{{totalPage}}</span></li>
+    <li><span>总数：{{totalNumber}}</span></li>
+    <li>
+    <select style="width:100px;height:34px;" ng-model="currentPage" ng-change="toPage(currentPage)"   ng-options="currentPage as currentPage for currentPage in showAllPageNumberArray"> 
+    </select>
+    </li>
+    </ul>
+   </div>
+<!--  加载更多end -->

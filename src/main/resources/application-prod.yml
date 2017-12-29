@@ -1,0 +1,54 @@
+server:
+  port: 8090
+  session:
+    timeout: 1800
+  #address: acount.yayao8.com
+  tomcat:
+    max-threads: 1000
+    min-spare-threads: 200
+    accept-count: 1000
+    max-connections: 1000
+ # connection-timeout: 60 
+spring:
+   datasource:
+     name: master
+     driver-class-name: com.mysql.jdbc.Driver
+     url: jdbc:mysql://120.77.253.90:3306/catch_goods_db
+     username: root
+     password: liliu
+   redis:
+     host: 120.77.253.90
+     password: liliu
+     port: 6379 
+     database: 1
+     timeout: 3000
+     pool: 
+       min-idle: 100
+       max-idle: 300
+       max-active: 800 
+myPugin: 
+  session: 
+    myDomainName: newzhuan.cn
+  projectName: CatchGoods
+  requestAuth: requestAuthProd
+  sevenSecondsDomainUrl: http://www.newzhuan.cn
+  catchGoodsDomainUrl: http://goods.newzhuan.cn
+  paymentSystemDomainUrl: http://payment.newzhuan.cn
+  rabbitmq:
+    GOODSORDER_DIRECT_EXCHANGE: goodsorder.catchgoods.exchange.direct
+    GOODSORDER_DIRECT_ROUTINGKEY: goodsorder.catchgoods.routingkey.direct
+    GOODSORDER_DIRECT_QUEUE: goodsorder.catchgoods.queue.direct
+    RECHARGERECORD_DIRECT_EXCHANGE: test.rechargerecord.catchgoods.exchange.direct
+    RECHARGERECORD_DIRECT_ROUTINGKEY: test.rechargerecord.catchgoods.routingkey.direct
+    RECHARGERECORD_DIRECT_QUEUE: test.rechargerecord.catchgoods.queue.direct
+    CATCHRECORD_DIRECT_EXCHANGE: catchrecord.catchgoods.exchange.direct
+    CATCHRECORD_DIRECT_ROUTINGKEY: catchrecord.catchgoods.routingkey.direct
+    CATCHRECORD_DIRECT_QUEUE: catchrecord.catchgoods.queue.direct
+    GOODSWEBREAD_DIRECT_EXCHANGE: goodswebread.catchgoods.exchange.direct
+    GOODSWEBREAD_DIRECT_ROUTINGKEY: goodswebread.catchgoods.routingkey.direct
+    GOODSWEBREAD_DIRECT_QUEUE: goodswebread.catchgoods.queue.direct
+  aliyunSmsAppkey: LTAIgDJerZxD8twJ
+  aliyunSmsAppsecret: 9PuLZNoEQRPDJm465MxL1JIXQY9Msh
+  aliyunSmsSignName: 抓你妹
+  aliyunSmsTemplateCodeAcountRegister: SMS_89885232
+  aliyunSmsTemplateCodePasswordUpdate: SMS_89885231

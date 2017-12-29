@@ -1,0 +1,37 @@
+    <label  class="text-danger nieyueText" style="font-size:30px;color:#ccc;">添加充值项</label>
+<br/>
+<!-- 增加 -->
+	<form novalidate name="myAddRechargeTermForm" ng-submit="addRechargeTermForm()">
+    <label  class="text-danger">※充值标题</label>
+  <div class=" comment-input-margin">
+    <input type="text" class=" comment-input" ng-model="rechargeTerm.title" name="title" required ng-minlength="1" ng-maxlength="16" placeholder="1-16位">
+    <div class="text-danger alert alert-danger " ng-show="myAddRechargeTermForm.title.$dirty && myAddRechargeTermForm.title.$invalid">
+				    	<i class="glyphicon glyphicon-info-sign"></i>输入正确充值标题
+				    </div>
+  </div>
+   <label class="text-danger" >※充值真钱</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="rechargeMoney"
+     ng-model="rechargeTerm.rechargeMoney" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddRechargeTermForm.rechargeMoney.$dirty && myAddRechargeTermForm.rechargeMoney.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+   <label class="text-danger" >※赠送金币</label>
+  <div class="comment-input-margin " >
+    <input type="text" class="comment-input" required name="giveMoney"
+     ng-model="rechargeTerm.giveMoney" ng-pattern="/(^[+]?[1-9]\d*(\.\d{1,2})?$)|(^[+]?[0]{1}(\.\d{1,2})?$)/"  placeholder="两位小数" >
+    <div class="text-danger alert alert-danger " ng-show="myAddRechargeTermForm.giveMoney.$dirty && myAddRechargeTermForm.giveMoney.$invalid">
+		<i class="glyphicon glyphicon-info-sign"></i>两位小数
+	</div>
+  </div>
+  <label  class="text-danger" >※状态</label>
+  <div class=" comment-input-margin" >
+  <select style="width:180px;height:50px;" ng-model="rechargeTerm.status" name="status"
+     ng-options="sa.id as sa.value for sa in [{id:0,value:'下架'},{id:1,value:'上架'}]">
+  </select>
+  </div>
+  <input type="submit" class="btn btn-lg btn-danger" 
+  ng-disabled=" myAddRechargeTermForm.$invalid || formDisabled " value="提交"/>
+</form>
+<!-- 增加 end-->
